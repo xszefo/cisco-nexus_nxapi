@@ -20,8 +20,7 @@ auth_body = {
 
 base_url='https://{}:443/api/'.format(host)
 login = 'aaaLogin.json'
-version = 'node/mo/sys/showversion.json?query-target=self'
-#version = 'node/mo/sys/showversion.json'
+system = 'api/mo/sys.json'
 
 ##############################
 ######## LOGGING IN ##########
@@ -39,29 +38,15 @@ cookies = {
 }
 
 headers = {"content-type": "application/json"}
-version_url = base_url + version
+system_url = base_url + system
 
 #print(version_url)
 
-response = requests.get(url=version_url, headers=headers, cookies=cookies, verify=False)
+response = requests.get(url=system_url, headers=headers, cookies=cookies, verify=False)
 
-resp_json = response.json()['imdata'][0]['sysmgrShowVersion']['attributes']
+sys_info = response.json()["imdata"][0]["topSystem"]["attributes"]
 
-uptime = resp_json['kernelUptime'].strip()
-version = resp_json['nxosVersion'].strip()
-
-print(f'{host} is alive for {uptime} and it is running NXOS {version}')
-
-#for k,v in resp_json.items():
-#	print(f'{k} - {v}')
-#
-#kernelUptime - 2 hour(s) 32 minute(s) 9 second(s)
-#lastResetReason - Unknown
-#lastResetService -
-#lastResetSysVersion -
-#lastResetTime -
-#nxosCompileTime -  12/22/2019 2:00:00
-#nxosImageFile - bootflash:///nxos.9.3.3.bin
-#nxosVersion - 9.3(3)
-#plugin - Core Plugin, Ethernet Plugin
+print("HOSTNAME:", sys_info["name"])
+print("SERIAL NUMBER:", sys_info["serial"])
+print("UPTIME:", sys_info["systemUpTime"])
 

@@ -9,8 +9,13 @@ host = 'sbx-nxos-mgmt.cisco.com'
 username = 'admin'
 password = 'Admin_1234!'
 
-auth_body = {"aaaUser": {"attributes": {
-    "name": username, "pwd": password}}}
+auth_body = {
+	"aaaUser": {
+		"attributes": {
+    		"name": username, "pwd": password
+		 }
+	}
+}
 
 base_url='https://{}:443/api/'.format(host)
 login = 'aaaLogin.json'
